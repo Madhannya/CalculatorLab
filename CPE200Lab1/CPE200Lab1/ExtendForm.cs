@@ -16,6 +16,7 @@ namespace CPE200Lab1
         private bool isContainDot = false;
         private bool isSpaceAllowed = false;
         private RPNCalculatorEngine engine;
+        private RPNCalculatorEngine RPNengine;
 
         public ExtendForm()
         {
@@ -101,14 +102,28 @@ namespace CPE200Lab1
 
         private void btnEqual_Click(object sender, EventArgs e)
         {
-            string result = engine.Process(lblDisplay.Text);
-            if (result is "E")
+            
             {
-                lblDisplay.Text = "Error";
-            } else
-            {
-                lblDisplay.Text = result;
+                string result = engine.Process(lblDisplay.Text);
+                if (result is "E")
+                {
+                    result = RPNengine.Process(lblDisplay.Text);
+                    if (result is "E")
+                    {
+                        lblDisplay.Text = "Error";
+                    }
+                    else
+                    {
+                        lblDisplay.Text = result;
+                    }
+                }
+                else
+                {
+                    lblDisplay.Text = result;
+                }
             }
+            
+
         }
 
         private void btnSign_Click(object sender, EventArgs e)
@@ -165,5 +180,12 @@ namespace CPE200Lab1
                 isSpaceAllowed = false;
             }
         }
+
+        private void ExtendForm_Load(object sender, EventArgs e)
+        {
+
+        }
+
+       
     }
 }

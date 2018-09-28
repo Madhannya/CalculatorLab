@@ -80,31 +80,14 @@ namespace CPE200Lab1
                         remainLength = maxOutputSize - parts[0].Length - 1;
                         // trim the fractional part gracefully. =
                         return result.ToString();
-                    }
-                    break;
-            }
-            return "E";
-        }
-
-        public string calculate(string operate, string firstOperand, string secondOperand, int maxOutputSize = 8)
-        {
-            switch (operate)
-            {
-                case "+":
-                    return (Convert.ToDouble(firstOperand) + Convert.ToDouble(secondOperand)).ToString();
-                case "-":
-                    return (Convert.ToDouble(firstOperand) - Convert.ToDouble(secondOperand)).ToString();
-                case "X":
-                    return (Convert.ToDouble(firstOperand) * Convert.ToDouble(secondOperand)).ToString();
-                case "÷":
-                    // Not allow devide be zero
-                    if (secondOperand != "0")
+                    } break;
+                case "%":
                     {
                         double result;
                         string[] parts;
                         int remainLength;
 
-                        result = (Convert.ToDouble(firstOperand) / Convert.ToDouble(secondOperand));
+                        result =(Convert.ToDouble(operand))/100;
                         // split between integer part and fractional part
                         parts = result.ToString().Split('.');
                         // if integer part length is already break max output, return error
@@ -118,9 +101,68 @@ namespace CPE200Lab1
                         return result.ToString();
                     }
                     break;
-                case "%":
-                    //your code here
-                    break;
+            }
+            return "E";
+        }
+
+        public string calculate(string operate, string firstOperand, string secondOperand, int maxOutputSize = 8)
+        {
+            /// <summary>
+            /// Adds two integers and operand.
+            /// </summary>
+            /// <returns>
+            /// The sum of integers.
+            /// </returns>
+            /// <exception "OverflowException">Thrown when one parameter is max .
+            /// <exception "FormatException">//if some of variable in format is invalid. 
+            /// </exception>
+            try
+            {
+                switch (operate)
+                {
+
+                    case "+":
+                        return (Convert.ToDouble(firstOperand) + Convert.ToDouble(secondOperand)).ToString();
+                    case "-":
+                        return (Convert.ToDouble(firstOperand) - Convert.ToDouble(secondOperand)).ToString();
+                    case "X":
+                        return (Convert.ToDouble(firstOperand) * Convert.ToDouble(secondOperand)).ToString();
+                    case "÷":
+                        // Not allow devide be zero
+                        if (secondOperand != "0")
+                        {
+                            double result;
+                            string[] parts;
+                            int remainLength;
+
+                            result = (Convert.ToDouble(firstOperand) / Convert.ToDouble(secondOperand));
+                            // split between integer part and fractional part
+                            parts = result.ToString().Split('.');
+                            // if integer part length is already break max output, return error
+                            if (parts[0].Length > maxOutputSize)
+                            {
+                                return "E";
+                            }
+                            // calculate remaining space for fractional part.
+                            remainLength = maxOutputSize - parts[0].Length - 1;
+                            // trim the fractional part gracefully. =
+                            return result.ToString();
+                        }
+                        break;
+                    case "%":
+                        //your code here
+                        break;
+                }
+            }
+            catch (OverflowException)
+            {
+                //if the number in variable is overflow
+                throw;
+            }
+            catch (FormatException)
+            {
+                //if some of variable in format is invalid. 
+                throw;
             }
             return "E";
         }

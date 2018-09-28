@@ -14,26 +14,41 @@ namespace CPE200Lab1
             string first;
             string second;
             string op;
+            string aws;
             Stack<string> numberstore = new Stack<string>();
             string [] NumberCo;
             NumberCo = str.Split(' ');
-            if (NumberCo.Length < 3) return "E";
+           
+            if (NumberCo.Length < 2 ) return "E";
             for(int i=0;i< NumberCo.Length; i++)
             {
                 if (!isOperator(NumberCo[i]))
                 {
-                    numberstore.Push(NumberCo[i]);
+                     if (NumberCo[i] == "")
+                    {
+                        break;
+                    }
+                    else if (NumberCo[i] == "1/x" || NumberCo[i] == "√" || NumberCo[i] == "%")
+                    {
+                        if (numberstore.Count >= 1)
+                        {
+                            aws = unaryCalculate(NumberCo[i], numberstore.Pop(), 8);
+                            numberstore.Push(aws);
+                        }
+                    }
+                     else numberstore.Push(NumberCo[i]);
                 }
+                
                 else if (numberstore.Count >= 2)
                 {
                     op = NumberCo[i];
                     second = numberstore.Pop();
                     first = numberstore.Pop();
-                    numberstore.Push(calculate(op, first, second, 8));
+                    numberstore.Push(calculate(op, first, second, 4));
                 }
                 else return "E";
             }
-             if(numberstore.Count == 1)return numberstore.Pop();
+             if(numberstore.Count == 1)return numberstore.Pop().ToString();
             return "E";
         }
     }
