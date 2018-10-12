@@ -32,7 +32,7 @@ namespace CPE200Lab1
                     {
                         if (numberstore.Count >= 1)
                         {
-                            aws = unaryCalculate(NumberCo[i], numberstore.Pop(), 8);
+                            aws = calculate(NumberCo[i], numberstore.Pop(), 8);
                             numberstore.Push(aws);
                         }
                     }
